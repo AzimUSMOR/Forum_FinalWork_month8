@@ -11,11 +11,6 @@ namespace lesson62.Models
     public class User : IdentityUser<int>
     {
         public string Avatar { get; set; }
-        public string Name { get; set; }
-        public string Bio { get; set; }
-        public string Sex { get; set; }
-        public int PubCount { get; set; }
-        public int SubCount { get; set; }
-        public int SubcribersCount { get; set; }       
+        public ICollection<Topic> Topics { get; set; }
     }
 }

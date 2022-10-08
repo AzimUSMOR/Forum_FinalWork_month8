@@ -18,36 +18,31 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (User.Identity.IsAuthenticated)
-
-                        {
-                            <p>@User.Identity.Name</p>
-                            <li class="nav-item">
-                                <form method="post" asp-controller="Account" asp-action="LogOff">
-
-                                    <input type="submit" value="Выход" />
-
-                                </form>
-                            </li>
-                            <li class="nav-item">
-                                <a asp-controller="User" asp-action="Index" asp-route-name="@User.Identity.Name">Личный кабинет</a>
-                            </li>
-                            <li class="nav-item">
-                                <a asp-controller="User" asp-action="Search">Поиск</a>
-                            </li>
-                        }
-
-                        else
-
-                        {
-                            <li class="nav-item">
-                                <a asp-controller="Account" asp-action="Login">Вход</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a asp-controller="Account" asp-action="Register">Регистрация</a>
-                            </li>
-                        }
+                        <div class="container">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <div class="row">
+                                    <div class="col-4">
+                                        <a asp-controller="Home" asp-action="Index">Главная</a>
+                                        <a asp-controller="Topic" asp-action="Create">Создать тему</a>
+                                    </div>
+                                    <div class="col-4">
+                                        <form method="post" asp-controller="Account" asp-action="LogOff">
+                                            <input type="submit" value="Выход" />
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+                            else 
+                            { 
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a class="btn" asp-controller="Account" asp-action="Login">Вход</a>
+                                        <a class="btn" asp-controller="Account" asp-action="Register">Регистрация</a>
+                                    </div>
+                                </div>                   
+                            }
+                        </div>                                                                                                                                          
                     </ul>
                 </div>
             </div>

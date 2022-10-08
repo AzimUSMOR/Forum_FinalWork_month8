@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 namespace lesson62.Models
 {
     public class UserContext : IdentityDbContext<User,IdentityRole<int>,int>
-    {        
+    {
+        public DbSet<Topic> Topics { get; set; }
         public UserContext(DbContextOptions<UserContext> options) : base(options) { }        
     }
 }
