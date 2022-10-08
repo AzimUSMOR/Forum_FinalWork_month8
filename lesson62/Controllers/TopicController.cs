@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -36,6 +37,7 @@ namespace lesson62.Controllers
         {
             if (ModelState.IsValid)
             {
+                t.MakeTime = DateTime.Now;
                 await _context.Topics.AddAsync(t);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "User", new { name = _userManager.GetUserAsync(User).Result.Id });
@@ -44,6 +46,32 @@ namespace lesson62.Controllers
             {
                 return View(t);
             }
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var publication = _context.Topics
+                .FirstOrDefault(m => m.Id == id);
+            if (publication == null)
+            {
+                return NotFound();
+            }
+            return View(publication);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var publication = await _context.Topics.FindAsync(id);
+            _context.Topics.Remove(publication);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

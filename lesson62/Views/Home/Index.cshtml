@@ -1,3 +1,49 @@
-﻿<h1>
-    Welcome to Lous Polos Armano
-</h1>
+﻿@model lesson62.ViewModels.TopicsViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <h2 class="position-relative start-50">Темы</h2>
+    @foreach (var item in Model.topics)
+    {
+        <a href="#">
+            <div class="container">
+                <div class="row">
+                    <div class="col-3">
+                        <p>@item.Name</p>
+                    </div>
+                    <div class="col-3">
+                        <p>@item.MakeTime</p>
+                    </div>
+                    <div class="col-3">
+                        <p>@item.User.UserName</p>
+                    </div>
+                    <div class="col-3">
+                        <p>@item.CommentCount</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+            }
+            @if (Model.pageViewModel.HasPreviousPage)
+            {
+                <a calss="btn btn-default" asp-action="Index" asp-route-page="@(Model.pageViewModel.PageNumber - 1)">
+                    <i class="gliphicon gltphicon-chervon-left">Назад</i>
+                </a>
+            }
+            @if (Model.pageViewModel.HasNextPage)
+            {
+                <a calss="btn btn-default" asp-action="Index" asp-route-page="@(Model.pageViewModel.PageNumber + 1)">
+                    <i class="gliphicon gltphicon-chervon-right">Вперед</i>
+                </a>
+            }
+            }
+
+
+
+

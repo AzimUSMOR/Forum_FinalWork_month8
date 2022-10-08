@@ -1,4 +1,6 @@
-﻿using lesson62.Models;
+﻿using lesson62.Enums;
+using lesson62.Models;
+using lesson62.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -25,9 +27,20 @@ namespace lesson62.Controllers
             _userManager = userManager;
         }
         [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(SortState sortOrder = SortState.DateDesc, int page = 1)
         {
-            return View();
+            int pageSize = 2;
+            IQueryable<Topic> topics = _context.Topics.Include(t => t.User);
+            topics = topics.OrderByDescending(u => u.MakeTime);
+            var count = topics.Count();
+            var items = topics.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            PageViewModel pvm = new PageViewModel(count, page, pageSize);
+            var tvm = new TopicsViewModel
+            {
+                topics = items,
+                pageViewModel = pvm
+            };
+            return View(tvm);
         }
     }
 }

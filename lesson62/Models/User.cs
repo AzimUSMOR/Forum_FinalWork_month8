@@ -12,5 +12,6 @@ namespace lesson62.Models
     {
         public string Avatar { get; set; }
         public ICollection<Topic> Topics { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }
