@@ -14,5 +14,6 @@ namespace lesson62.Models
         public DateTime MakeTime { get; set; }        
         public int UserId { get; set; }
         public User User { get; set; }
+        IEnumerable<Comment> Comments { get; set; }
     }
 }

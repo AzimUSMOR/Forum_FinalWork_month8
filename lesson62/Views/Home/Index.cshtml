@@ -11,7 +11,7 @@
     <h2 class="position-relative start-50">Темы</h2>
     @foreach (var item in Model.topics)
     {
-        <a href="#">
+        <a asp-action="Index" asp-controller="Comment" asp-route-id="@item.Id" href="#">
             <div class="container">
                 <div class="row">
                     <div class="col-3">
