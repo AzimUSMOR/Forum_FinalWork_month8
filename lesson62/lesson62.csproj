@@ -19,8 +19,4 @@
     <PackageReference Include="ServiceStack.Client" Version="6.3.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Home\" />
-  </ItemGroup>
-
 </Project>
