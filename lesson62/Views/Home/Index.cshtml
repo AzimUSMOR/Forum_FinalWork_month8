@@ -9,41 +9,55 @@
 @if (User.Identity.IsAuthenticated)
 {
     <h2 class="position-relative start-50">Темы</h2>
-    @foreach (var item in Model.topics)
-    {
-        <a asp-action="Index" asp-controller="Comment" asp-route-id="@item.Id" href="#">
-            <div class="container">
+    <div style="border: 1px solid black">
+        @foreach (var item in Model.topics)
+        {
+            <a asp-controller="Comment" asp-action="Details" asp-route-id="@item.Id">
                 <div class="row">
                     <div class="col-3">
-                        <p>@item.Name</p>
+                        @item.Name
                     </div>
                     <div class="col-3">
-                        <p>@item.MakeTime</p>
+                        @item.MakeTime
                     </div>
                     <div class="col-3">
-                        <p>@item.User.UserName</p>
+                        @item.User.UserName
                     </div>
                     <div class="col-3">
-                        <p>@item.CommentCount</p>
+                        @item.CommentCount
                     </div>
                 </div>
-            </div>
+            </a>
+        }
+    </div>    
+    @if (Model.pageViewModel.HasPreviousPage)
+    {
+        <a calss="btn btn-default" asp-action="Index" asp-route-page="@(Model.pageViewModel.PageNumber - 1)">
+            <i class="gliphicon gltphicon-chervon-left">Назад</i>
         </a>
-            }
-            @if (Model.pageViewModel.HasPreviousPage)
-            {
-                <a calss="btn btn-default" asp-action="Index" asp-route-page="@(Model.pageViewModel.PageNumber - 1)">
-                    <i class="gliphicon gltphicon-chervon-left">Назад</i>
-                </a>
-            }
-            @if (Model.pageViewModel.HasNextPage)
-            {
-                <a calss="btn btn-default" asp-action="Index" asp-route-page="@(Model.pageViewModel.PageNumber + 1)">
-                    <i class="gliphicon gltphicon-chervon-right">Вперед</i>
-                </a>
-            }
-            }
+    }
+    @if (Model.pageViewModel.HasNextPage)
+    {
+        <a calss="btn btn-default" asp-action="Index" asp-route-page="@(Model.pageViewModel.PageNumber + 1)">
+            <i class="gliphicon gltphicon-chervon-right">Вперед</i>
+        </a>
+    }
+}
 
 
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 
+
+    <script>
+        const find = function(id) {
+            $.ajax(
+                {
+                    url: '@Url.Action("Index", "Comment")',
+                    type: 'GET',
+                    data: { 'id': id }
+                })
+        }
+    </script>
+}
 

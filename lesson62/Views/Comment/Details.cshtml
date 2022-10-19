@@ -1,0 +1,38 @@
+﻿@model lesson62.Models.Topic
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container">
+    <div id="title" class="text-center" style="position: sticky; top: 1px;">@Model.Name | @Model.MakeTime | @Model.User.UserName</div>
+    <div style="border: 1px solid black;" class="w-75 h-25">@Model.Description <div class="mt-3"><button class="btn btn-outline-primary" onclick="scrollToCommentForm()">Comment</button></div></div>
+    <div id="comments"></div>
+    <div id="comForm">
+        <textarea id="posttext"></textarea>
+        <input type="button" id="postComment" onclick="sendComment('@Model.Id')" value="Comment" />
+    </div>
+</div>
+
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script>
+        const scrollToCommentForm = function () {
+            let el = document.getElementById('comForm');
+            el.scrollIntoView();
+        }
+        const sendComment = function (postId) {
+            $.ajax(
+                {
+                    url: '@Url.Action("Comment", "Comment")',
+                    type: 'POST',
+                    data: {'postId': postId, 'content': $('#posttext').val() },
+                });
+        };
+        const loadComments = function () {
+            $('#comments').load('@Url.Action("Index","Comment")?id=' + @Model.Id);
+        };
+        let interval = setInterval( loadComments, 2000);
+    </script>    
+
+}

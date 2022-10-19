@@ -1,4 +1,5 @@
 ﻿using lesson62.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace lesson62.Controllers
 {
+    [Authorize]
     public class TopicController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -19,6 +21,7 @@ namespace lesson62.Controllers
             _context = context;
             _userManager = userManager;
         }
+        
 
         public async Task<IActionResult> Create()
         {
@@ -38,9 +41,10 @@ namespace lesson62.Controllers
             if (ModelState.IsValid)
             {
                 t.MakeTime = DateTime.Now;
+                t.User = await _userManager.GetUserAsync(User);
                 await _context.Topics.AddAsync(t);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "User", new { name = _userManager.GetUserAsync(User).Result.Id });
+                return RedirectToAction("Index", "Home");
             }
             else
             {

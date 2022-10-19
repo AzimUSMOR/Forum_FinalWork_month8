@@ -7,6 +7,7 @@ namespace lesson62.Enums
 {
     public enum SortState
     {
-        DateDesc
+        DateDesc,
+        DateAsc
     }
 }
